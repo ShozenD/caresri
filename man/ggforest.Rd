@@ -4,7 +4,7 @@
 \alias{ggforest}
 \title{Creates a forest plot}
 \usage{
-ggforest(m, intercept = FALSE, ...)
+ggforest(m, intercept = FALSE, categories = NULL, ...)
 }
 \arguments{
 \item{m}{A fitted logistic regression model object}

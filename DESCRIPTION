@@ -20,4 +20,5 @@ Imports:
     ggplot2,
     dplyr,
     broom,
-    speedglm
+    speedglm,
+    plyr

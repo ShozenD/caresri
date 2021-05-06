@@ -3,3 +3,4 @@
 export(extract_reference)
 export(ggforest)
 export(make_ref_df)
+export(map_categories)
