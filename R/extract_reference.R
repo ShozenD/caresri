@@ -8,11 +8,11 @@
 #' @export
 #'
 #' @examples
-extract_reference <- function(x){
+extract_reference <- function(x) {
   labs <- names(x)
   y <- c()
-  for(i in 1:length(x)){
-    y[[labs[i]]] <- x[[i]][1]
+  for (i in 1:length(x)) {
+    y[[labs[i]]] <- paste0(labs[i]," [Ref: ",x[[i]][1],"]")
   }
   return(y)
 }
