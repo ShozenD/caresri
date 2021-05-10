@@ -4,14 +4,51 @@
 \alias{ggforest}
 \title{Creates a forest plot}
 \usage{
-ggforest(m, intercept = FALSE, categories = NULL, ...)
+ggforest(
+  model,
+  include.intercept = FALSE,
+  categories = NULL,
+  color.scheme = NULL,
+  title = NULL,
+  xlab = "Terms",
+  ylab = "Log Odds",
+  errorbar = TRUE,
+  errorbar.width = 0.3,
+  linetype = "dashed",
+  point.size = 3,
+  point.alpha = 1,
+  ggtheme = theme_classic(),
+  ...
+)
 }
 \arguments{
-\item{m}{A fitted logistic regression model object}
+\item{model}{A fitted logistic regression model object}
 
-\item{intercept}{whether to include the intercept within the plot}
+\item{include.intercept}{Whether to include the model intercept within the plot}
 
-\item{...}{}
+\item{categories}{A named list containing the grouping of terms (e.g. list(Race = c("RACE"), SocioDemographics = c("AGE", "SEX")))}
+
+\item{color.scheme}{A named list containing the coloring for each category}
+
+\item{title}{Plot title}
+
+\item{xlab}{x label}
+
+\item{ylab}{y label}
+
+\item{errorbar}{Whether to draw errorbars}
+
+\item{errorbar.width}{The width of the errorbars}
+
+\item{linetype}{The linetype of the reference line}
+
+\item{point.size}{Point size}
+
+\item{point.alpha}{Alpha value of the points}
+
+\item{ggtheme}{ggplot theme}
+
+\item{...}{Other parameters passed to ggplot}
 }
 \value{
 A forest plot

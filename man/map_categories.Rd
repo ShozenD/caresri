@@ -8,10 +8,12 @@ which enables users color the forest plot not only by its variable name but also
 map_categories(df, x)
 }
 \arguments{
-\item{x}{}
+\item{df}{A dataframe containing model results}
+
+\item{x}{A named list}
 }
 \value{
-A data frame
+A dataframe
 }
 \description{
 Given a dictionary of categories, this function will create a "category" column in the data frame,

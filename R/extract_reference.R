@@ -6,8 +6,6 @@
 #'
 #' @return y A list containing the extracted reference term
 #' @export
-#'
-#' @examples
 extract_reference <- function(x) {
   labs <- names(x)
   y <- c()

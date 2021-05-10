@@ -1,10 +1,10 @@
 #' Given a dictionary of categories, this function will create a "category" column in the data frame,
 #' which enables users color the forest plot not only by its variable name but also pre-defined categories
 #'
-#' @param df
-#' @param x
+#' @param df A dataframe containing model results
+#' @param x A named list
 #'
-#' @return A data frame
+#' @return A dataframe
 #' @export
 #'
 #' @examples
