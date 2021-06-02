@@ -12,7 +12,6 @@
 #' x <- list(SocioDemographics = c("SEX", "FAMINC"), "Health Care" = c("COVERAGE"), Race = c("RACE"))
 #'
 #' map_categories(df, x)
-#'
 map_categories <- function(df, x){
   cat <- c()
   lab <- c()
@@ -23,7 +22,7 @@ map_categories <- function(df, x){
   }
 
   dplyr::mutate(df,
-         category = as.character(label),
+         category = as.character(.data$label),
          category = plyr::mapvalues(category, from=lab, to=cat),
          category = factor(category, levels = names(x))
          )

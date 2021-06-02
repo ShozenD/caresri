@@ -14,5 +14,5 @@ test_that("map_categories() works", {
 
   z <- c(rep("Race",4),rep("SocioDemographics",7),"Health Care")
 
-  expect_equal(y$category, z)
+  expect_equal(as.character(y$category), z)
 })

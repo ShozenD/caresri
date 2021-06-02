@@ -24,5 +24,4 @@ df <- data.frame(variable = 1:12, label = c(rep("RACE",4),rep("FAMINC",5),rep("S
 x <- list(SocioDemographics = c("SEX", "FAMINC"), "Health Care" = c("COVERAGE"), Race = c("RACE"))
 
 map_categories(df, x)
-
 }

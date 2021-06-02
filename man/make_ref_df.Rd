@@ -16,6 +16,8 @@ A tibble(data frame) containing variable names and their reference labels
 Creates a tibble(data frame) with variables and their reference labels
 }
 \examples{
+\dontrun{
 m <- glm(y ~ x, data=d, family=binomial)
 make_ref_df(m)
+}
 }

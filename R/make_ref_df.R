@@ -6,8 +6,10 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' m <- glm(y ~ x, data=d, family=binomial)
 #' make_ref_df(m)
+#' }
 make_ref_df <- function(m){
   y <- extract_reference(m$xlevels)
 

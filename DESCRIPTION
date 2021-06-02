@@ -22,4 +22,19 @@ Imports:
     broom,
     speedglm,
     plyr,
-    ggpubr
+    ggpubr,
+    purrr,
+    magrittr,
+    stringr,
+    readr,
+    rlang
+Depends: 
+    R (>= 2.10)
+Collate: 
+    'extract_reference.R'
+    'utilities.R'
+    'ggforest.R'
+    'make_ref_df.R'
+    'map_categories.R'
+    'read_samadult.R'
+    'utils-pipe.R'

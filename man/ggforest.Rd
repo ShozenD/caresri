@@ -57,6 +57,8 @@ A forest plot
 Creates a forest plot
 }
 \examples{
+\dontrun{
 model <- glm(y ~ x, data=data, family=binomial)
 ggforest(model)
+}
 }

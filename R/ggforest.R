@@ -1,3 +1,9 @@
+#' @include utilities.R
+#' @import dplyr
+#' @import ggplot2
+#' @importFrom rlang .data
+#' @importFrom stats binomial
+NULL
 #' Creates a forest plot
 #'
 #' @param model A fitted logistic regression model object
@@ -19,8 +25,10 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' model <- glm(y ~ x, data=data, family=binomial)
 #' ggforest(model)
+#' }
 ggforest <- function(model,
                      include.intercept = FALSE, categories = NULL, color.scheme = NULL,
                      title = NULL, xlab = "Terms", ylab = "Log Odds",
@@ -58,12 +66,12 @@ ggforest_core <- function(model,
                           ggtheme = theme_classic(),...)
 {
   df <- broom::tidy(model, conf.int = T, exponentiate = T) %>%
-    dplyr::select(term, estimate, dplyr::starts_with("conf"))
+    dplyr::select(.data$term, .data$estimate, dplyr::starts_with("conf"))
 
   # Remove Intercept
   #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   if (!include.intercept) {
-    df <- filter(df, term != "(Intercept)")
+    df <- dplyr::filter(df, .data$term != "(Intercept)")
   }
 
   # Remove term labels from subcategories
@@ -72,22 +80,22 @@ ggforest_core <- function(model,
   term.classes <- attr(model$terms, "dataClasses")
   term.labels.categorical <- term.labels[term.classes[-1] %in% c("character", "factor")]
   df <- mutate(df,
-               label = str_match(term, paste(term.labels, collapse = "|")),
-               term = str_remove_all(term, paste(term.labels.categorical, collapse = "|")))
+               label = stringr::str_match(.data$term, paste(term.labels, collapse = "|")),
+               term = stringr::str_remove_all(.data$term, paste(term.labels.categorical, collapse = "|")))
 
   # Make references and order labels
   #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   df <- df %>%
-    group_by(label) %>%
+    group_by(.data$label) %>%
     mutate(inner.order = row_number()) %>%
     bind_rows(make_ref_df(model)) %>%
-    mutate(label = factor(label, levels = term.labels)) %>%
-    arrange(label, inner.order) %>%
+    mutate(label = factor(.data$label, levels = .data$term.labels)) %>%
+    arrange(.data$label, .data$inner.order) %>%
     ungroup()
 
   df <- mutate(df,
                outer.order = row_number(),
-               outer.order = factor(outer.order, levels = rev(outer.order)))
+               outer.order = factor(.data$outer.order, levels = rev(.data$outer.order)))
 
   # If specified, group terms into larger categories
   #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -99,12 +107,12 @@ ggforest_core <- function(model,
 
   # Main plot
   #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-  p <- ggplot(df, aes(y = estimate, x = outer.order, color=category))
+  p <- ggplot(df, aes(y = .data$estimate, x = .data$outer.order, color= .data$category))
 
   p <- p +
     geom_hline(yintercept = 1, linetype = linetype) +
     geom_point(size = point.size, alpha = point.alpha) +
-    geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = errorbar.width)
+    geom_errorbar(aes(ymin = .data$conf.low, ymax = .data$conf.high), width = errorbar.width)
 
   p <- p +
     scale_y_log10() +
@@ -120,21 +128,3 @@ ggforest_core <- function(model,
 
   return(p)
 }
-
-cat <- list(
-  Race = c("RACE"),
-  SocioDemographics = c("SEX", "AGE", "EDUC", "FAMINC", "MARITAL", "PLBORN"),
-  HealthStatus = c("LIMIT"),
-  LifeStyle = c("MD"),
-  HealthCare = c("PHSTAT", "COVERAGE", "GMC"),
-  Year = c("YEAR")
-)
-
-cs <- list(
- Race =  "#ffa600",
- SocioDemographics = "#ff6e54",
- HealthStatus = "#dd5182",
- LifeStyle = "#955196",
- HealthCare = "#444e86",
- Year = "#003f5c"
-)
