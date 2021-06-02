@@ -7,56 +7,29 @@
 <!-- badges: end -->
 
 The goal of `caresri` is to provide reusable and reproducible code for
-the Stanford CARE summer research immersion program.
+the [Stanford CARE summer research immersion
+program](https://med.stanford.edu/care/education/student-summer-internship).
 
 ## Installation
 
-You can install the released version of caresri from
+You can install the released version of `caresri` from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 install.packages("caresri")
 ```
 
-And the development version from [GitHub](https://github.com/) with:
+And the development version from
+[GitHub](https://github.com/ShozenD/caresri) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("ShozenD/caresri")
 ```
 
-## Example
+## Current Functionalities
 
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(caresri)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+-   `read_samadult`, `read_samadult_at`: Make reading NHIS sample adult
+    files easier and reduce memory consumption.
+-   `ggforest`: Create a forest plot to display logistic regression
+    results.
