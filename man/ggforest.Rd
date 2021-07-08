@@ -11,7 +11,7 @@ ggforest(
   color.scheme = NULL,
   title = NULL,
   xlab = "Terms",
-  ylab = "Log Odds",
+  ylab = "Log OR",
   errorbar = TRUE,
   errorbar.width = 0.3,
   linetype = "dashed",

@@ -43,10 +43,11 @@ read_samadult <- function(
     dplyr::select(.varnames) %>%
     mutate(year = year)
 
+  # TODO: Fix bug where it doesn't rename if there are no NA varnames
   if(rename){ # Rename columns to user specified names
     .newnames <- lookup.tbl$newnames
-    .varnames <- .varnames[-which(is.na(.newnames))]
-    .newnames <- .newnames[-which(is.na(.newnames))]
+    .varnames <- .varnames[which(!is.na(.newnames))]
+    .newnames <- .newnames[which(!is.na(.newnames))]
 
     df <- rename_at(df, .varnames, ~.newnames)
   } else {    # Rename columns to latest version

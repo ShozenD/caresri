@@ -31,7 +31,7 @@ NULL
 #' }
 ggforest <- function(model,
                      include.intercept = FALSE, categories = NULL, color.scheme = NULL,
-                     title = NULL, xlab = "Terms", ylab = "Log Odds",
+                     title = NULL, xlab = "Terms", ylab = "Log OR",
                      errorbar = TRUE, errorbar.width = 0.3,
                      linetype = "dashed", point.size = 3, point.alpha = 1.0,
                      ggtheme = theme_classic(),...)
@@ -89,7 +89,7 @@ ggforest_core <- function(model,
     group_by(.data$label) %>%
     mutate(inner.order = row_number()) %>%
     bind_rows(make_ref_df(model)) %>%
-    mutate(label = factor(.data$label, levels = .data$term.labels)) %>%
+    mutate(label = factor(.data$label, levels = term.labels)) %>%
     arrange(.data$label, .data$inner.order) %>%
     ungroup()
 

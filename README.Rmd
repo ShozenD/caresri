@@ -23,13 +23,7 @@ The goal of `caresri` is to provide reusable and reproducible code for the [Stan
 
 ## Installation
 
-You can install the released version of `caresri` from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("caresri")
-```
-
-And the development version from [GitHub](https://github.com/ShozenD/caresri) with:
+You can install the development version from [GitHub](https://github.com/ShozenD/caresri) with:
 
 ``` r
 # install.packages("devtools")
