@@ -12,14 +12,7 @@ program](https://med.stanford.edu/care/education/student-summer-internship).
 
 ## Installation
 
-You can install the released version of `caresri` from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("caresri")
-```
-
-And the development version from
+You can install the development version from
 [GitHub](https://github.com/ShozenD/caresri) with:
 
 ``` r
