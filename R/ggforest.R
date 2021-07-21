@@ -8,6 +8,7 @@ NULL
 #'
 #' @param model A fitted logistic regression model object
 #' @param include.intercept Whether to include the model intercept within the plot
+#' @param include.label If TRUE, points will be annotated
 #' @param categories A named list containing the grouping of terms (e.g. list(Race = c("RACE"), SocioDemographics = c("AGE", "SEX")))
 #' @param color.scheme A named list containing the coloring for each category
 #' @param title Plot title
@@ -18,6 +19,9 @@ NULL
 #' @param linetype The linetype of the reference line
 #' @param point.size Point size
 #' @param point.alpha Alpha value of the points
+#' @param label.size The size of the labels
+#' @param label.digits How many digits to round the estimates
+#' @param label.color The color of the labels
 #' @param ggtheme ggplot theme
 #' @param ... Other parameters passed to ggplot
 #'
@@ -30,10 +34,12 @@ NULL
 #' ggforest(model)
 #' }
 ggforest <- function(model,
-                     include.intercept = FALSE, categories = NULL, color.scheme = NULL,
-                     title = NULL, xlab = "Terms", ylab = "Log OR",
+                     include.intercept = FALSE, include.label = FALSE,
+                     categories = NULL, color.scheme = NULL,
+                     title = NULL, xlab = "Terms", ylab = "Odds Ratio",
                      errorbar = TRUE, errorbar.width = 0.3,
                      linetype = "dashed", point.size = 3, point.alpha = 1.0,
+                     label.size = 1, label.digits = 1, label.color = "white",
                      ggtheme = theme_classic(),...)
 
 {
@@ -48,9 +54,11 @@ ggforest <- function(model,
   #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   .opts <- list(
     model = model, title = title, xlab = xlab, ylab = ylab,
-    include.intercept = include.intercept, categories = categories, color.scheme = color.scheme,
+    include.intercept = include.intercept, include.label = include.label,
+    categories = categories, color.scheme = color.scheme,
     errorbar = errorbar, errorbar.width = errorbar.width,
-    linetype = linetype, point.size = point.size,
+    linetype = linetype, point.size = point.size, point.alpha = point.alpha,
+    label.size = label.size, label.digits = label.digits, label.color = label.color,
     ggtheme = ggtheme, ...)
 
   p <- do.call(ggforest_core, .opts)
@@ -59,11 +67,13 @@ ggforest <- function(model,
 }
 
 ggforest_core <- function(model,
-                          include.intercept = FALSE, categories = NULL, color.scheme = NULL,
+                          include.intercept = FALSE, include.label = FALSE,
+                          categories = NULL, color.scheme = NULL,
                           title = NULL, xlab = NULL, ylab = NULL,
                           errorbar = TRUE, errorbar.width = 0.3,
                           linetype = "dashed", point.size = 5, point.alpha = 1.0,
-                          ggtheme = theme_classic(),...)
+                          label.size = 1.5, label.digits = 1, label.color = "white",
+                          ggtheme = theme_classic(), ...)
 {
   df <- broom::tidy(model, conf.int = T, exponentiate = T) %>%
     dplyr::select(.data$term, .data$estimate, dplyr::starts_with("conf"))
@@ -107,12 +117,18 @@ ggforest_core <- function(model,
 
   # Main plot
   #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-  p <- ggplot(df, aes(y = .data$estimate, x = .data$outer.order, color= .data$category))
+  p <- ggplot(df, aes(.data$outer.order, .data$estimate,
+                      color=.data$category,
+                      label=round(.data$estimate,label.digits)))
 
   p <- p +
     geom_hline(yintercept = 1, linetype = linetype) +
     geom_point(size = point.size, alpha = point.alpha) +
     geom_errorbar(aes(ymin = .data$conf.low, ymax = .data$conf.high), width = errorbar.width)
+
+  if(include.label){
+    p <- p + geom_text(color = label.color, size = label.size)
+  }
 
   p <- p +
     scale_y_log10() +
